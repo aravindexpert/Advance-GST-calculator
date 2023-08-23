@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advanced GST Calculator</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="calculator">
+    <h1>Advanced GST Calculator</h1>
+    <form id="gstCalculatorForm">
+      <div class="item-form" id="gstCalculatorForm">
+        <input type="text" id="item_name" class="item-name" placeholder="Item Name" required>
+        <input type="number" id="item_amount" class="item-amount" placeholder="Amount" required>
+        <input type="number" id="itemgstrate" class="item-gst-rate" placeholder="GST Rate (%)" min="0" max="28" required>
+        <select class="item-tax-type" id="I_N" required>
+          <option value="inclusive">Inclusive</option>
+          <option value="exclusive">Exclusive</option>
+        </select>
+        <button type="submit">Add Item</button>
+      </div>
+      <table id="data-table">
+        <thead>
+          <tr>
+            <th>Item Name</th>
+            <th>Amount</th>
+            <th>GST rate</th> 
+            <th>Inclusive/Exclusive</th> 
+          </tr>
+        </thead>
+        <tbody id="table-body">
+          <!-- Data from local storage will be dynamically added here -->
+        </tbody>
+      </table>
+      <button type="button" id="resetBtn">Reset</button>
+      <button type="button" id="calculateBtn">Calculate</button>
+    </form>
+    <div class="result" id="result"></div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
