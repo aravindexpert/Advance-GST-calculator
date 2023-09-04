@@ -97,18 +97,35 @@ document.getElementById("calculateBtn").addEventListener("click", function () {
   const storedItems = localStorage.getItem("gstCalculatorItems");
   if (storedItems) {
     const items = JSON.parse(storedItems);
-    let totalGST = 0;
-    let grandTotal = 0;
 
+    // Clear any previous results
+    const resultElement = document.getElementById("result");
+    resultElement.innerHTML = "";
+
+    // Calculate and display GST and total for each item
     items.forEach(item => {
-      totalGST += item.gstAmount;
-      grandTotal += item.totalAmount;
+      const itemGST = (item.taxType === "inclusive") ? item.gstAmount : item.amount * (item.gstRate / 100);
+      const itemTotal = (item.taxType === "inclusive") ? item.amount : item.amount + itemGST;
+      
+      // Display GST and total for each item
+      resultElement.innerHTML += `
+        <p><strong>${item.name} - GST: ${itemGST.toFixed(2)}, Total: ${itemTotal.toFixed(2)}</strong></p>
+      `;
     });
 
-    const resultElement = document.getElementById("result");
-    resultElement.innerHTML = `
+    // Calculate and display overall GST and total
+    let totalGST = items.reduce((acc, item) => {
+      const itemGST = (item.taxType === "inclusive") ? item.gstAmount : item.amount * (item.gstRate / 100);
+      return acc + itemGST;
+    }, 0);
+
+    let grandTotal = items.reduce((acc, item) => {
+      const itemTotal = (item.taxType === "inclusive") ? item.amount : item.amount + item.gstAmount;
+      return acc + itemTotal;
+    }, 0);
+
+    resultElement.innerHTML += `
       <p><strong>Total GST Amount: ${totalGST.toFixed(2)}</strong></p>
-      
       <p><strong>Grand Total: ${grandTotal.toFixed(2)}</strong></p>
     `;
   } else {
@@ -116,6 +133,7 @@ document.getElementById("calculateBtn").addEventListener("click", function () {
     resultElement.innerHTML = `<p>No items found to calculate.</p>`;
   }
 });
+
 
 
 document.getElementById("resetBtn").addEventListener("click", function () {
