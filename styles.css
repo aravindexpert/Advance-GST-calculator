@@ -16,7 +16,9 @@ body {
   text-align: center;
   width: 600px;
 }
-
+.content{
+  display:block;
+}
 h1 {
   color: #007bff;
   margin-bottom: 20px;
